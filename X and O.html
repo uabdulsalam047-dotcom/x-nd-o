@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tic Tac Toe</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>Tic Tac Toe
+		<br>Two PLayers
+	</h1>
+	<div class="mother">
+		<div >How to Play</div>
+		<div class="child">1. Click on any of the boxes to play.
+			<br>2. If Player X wins , then Player O will start.
+			<br> 3. If Player O wins, then Player X will start.
+			<br>4. When Its a Draw The Last Player will statr.
+		</div>
+	</div>
+	<form action="">
+		<input type="text" value="Player X scores:" id="f" readonly><input type="text" id="pxs" value="" readonly>
+		<br>
+		<input type="text" value="Player O scores:" id="f" readonly><input type="text" id="pos" value="" readonly>
+	</form>
+	<div id="board">
+		<div class="cell" id="cell-0"></div>
+		<div class="cell" id="cell-1"></div>
+		<div class="cell" id="cell-2"></div>
+		<div class="cell" id="cell-3"></div>
+		<div class="cell" id="cell-4"></div>
+		<div class="cell" id="cell-5"></div>
+		<div class="cell" id="cell-6"></div>
+		<div class="cell" id="cell-7"></div>
+		<div class="cell" id="cell-8"></div>
+	</div>
+	<p id="announcer"></p>
+	<p id="announcers"></p>
+	<button onclick="location.reload()">Restart</button>
+	<a href="home.html">Back To Home</a>
+	<link rel="stylesheet" href="X and O.css">
+<script>
+let currentPlayer = 'X';
+let board = ['', '', '', '', '', '', '', '', ''];
+
+const cells= document.querySelectorAll('.cell');
+
+cells.forEach((cell, index)=> {
+	cell.addEventListener('click', ()=>{
+		if(board[index]===''){
+			board[index] = currentPlayer;
+			cell.textContent=currentPlayer;
+			checkWin();
+			if (currentPlayer=== 'X'){
+				cell.classList.add("x-color");
+			}
+			else{
+				cell.classList.add("O-color")
+			}
+			if(document.getElementById("pos").value > document.getElementById("pxs").value){
+				document.getElementById("announcers").innerHTML="PLayer O is leading"
+			}
+			else if(document.getElementById("pos").value < document.getElementById("pxs").value){
+				document.getElementById("announcers").innerHTML="PLayer X is leading"
+			}
+			else{
+				document.getElementById("announcers").innerHTML="Its a Tie now";
+			}
+			
+			currentPlayer=currentPlayer=== 'X' ? 'O': 'X';
+		}
+	});
+});
+function checkWin() {
+	const winConditions = [
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8],
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8],
+		[0, 4, 8],
+		[2, 4, 6],
+	];
+	
+	for (const combine of winConditions){
+		if(board[combine[0]]===board[combine[1]]&&
+		board[combine[1]]===board[combine[2]]&&
+		board[combine[0]] !== ''){
+			if(board[combine[0]]=== 'X'){
+				board = ['', '', '', '', '', '', '', '', ''];
+				document.querySelectorAll('.cell').forEach((cell)=> {
+					cell.textContent='';
+				});
+				currentPlayer= 'X'
+				document.getElementById("pxs").value-=-1;
+				document.getElementById("announcer").innerHTML="Player X wins!"
+				
+			}else {
+				board = ['', '', '', '', '', '', '', '', ''];
+				document.querySelectorAll('.cell').forEach((cell)=> {
+					cell.textContent='';
+				});
+				currentPlayer= 'O'
+				document.getElementById("pos").value-=-1;
+				document.getElementById("announcer").innerHTML="Player O wins!"
+				
+			}
+			
+			return true;
+		}
+		
+	}
+	
+	if(!board.includes('')){
+		document.getElementById("announcer").innerHTML="It's a draw"
+		board = ['', '', '', '', '', '', '', '', ''];
+		document.querySelectorAll('.cell').forEach((cell)=> {
+			cell.textContent='';
+		});
+		currentPlayer=currentPlayer=== 'X' ? 'O': 'X';
+		return true;
+	}
+	
+}
+
+function resetBoard(){
+	board = ['', '', '', '', '', '', '', '', ''];
+	document.querySelectorAll('.cell').forEach((cell)=> {
+		cell.textContent='';
+	});
+	currentPlayer= ''
+}
+
+</script>
+
+<footer>Created by: Usman Abdulsalam
+        <br>Whatsapp: 07035514222
+        <br>call:     070176127843
+        <br>Tiktok: @Abdulsalam Usman
+        <br>G-mail: uabdulsalam047@gmail.com
+    </footer>
+</body>
+</html>
